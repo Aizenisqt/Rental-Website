@@ -1,0 +1,235 @@
+﻿@page
+@model RentalSite.Pages.OtherUserProfileModel
+@{
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RentalSite</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/OtherUserProfile.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+
+
+    <div class="modal fade" id="ItemInfo" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content " id="custom-modal-bg">
+                <div class="modal-header">
+                    @* <h1 class="modal-title fs-3" id="itemTitle"></h1> *@
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h1 class="modal-title fs-3" id="itemTitle"></h1>
+                    <!-- Bootstrap carousel -->
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner" id="itemPhotos"></div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                    <div class="ItemInfoContainer">
+                        <div class="itemDescription">
+                            <img src="~/icon//ForRent.png" style="position: absolute;top: 90%;width: 150px;height: auto;" />
+                            <hr style="margin:0;border-width:1px;" />
+                            <h4 class="fs-5" style=" position: absolute;top: 103%;left: 20%;width: 110px;height: auto; word-break:break-all;">
+                                <strong>Price:</strong> $<span id="itemPrice"></span>
+                            </h4>
+                            <p class="fs-5" id="itemDescription"></p>
+
+                        </div>
+
+
+                        <div class="Price_Inclusion" style="text-align:center;">
+                            <h4 id="InclusionHeader" style=" background-color: #D7BBF5;padding:10px;text-align:center;margin:3px;border-radius:10px;">
+                                Inclusion
+                            </h4>
+                            <p class="fs-5" id="itemInclusion"></p>
+                        </div>
+                    </div>
+                    <button type="button" class="w-100 btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="InformationModal" aria-labelledby="InformationModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="InformationModalBG">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-3" id="exampleModalLabel">Information</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @foreach (var user in Model.users)
+                    {
+                        <p class="fs-5"><strong>FullName:</strong>    @user.FullName</p>
+                        <p class="fs-5"><strong>Email:</strong>    @user.Email</p>
+                        <p class="fs-5"><strong>Bio:</strong>    @user.Bio</p>
+                        <p class="fs-5"><strong>Gender:</strong>    @user.Gender</p>
+                        <p class="fs-5"><strong>Birthday:</strong>    @user.Birthday</p>
+                        <p class="fs-5"><strong>Phone Number:</strong>    @user.PhoneNumber</p>
+                        <p class="fs-5"><strong>Address:</strong>    @user.Address</p>
+                        <p class="fs-5"><strong>Favorite Fandom:</strong>    @user.Fandom</p>
+                        <p class="fs-5"><strong>Emergency Contact:</strong>    @user.EmergencyContact</p>
+
+                    }
+
+                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="userview">
+
+        @foreach (var user in Model.users)
+        {
+            <div class="profile-header">
+                <!-- Cover/Background Photo -->
+                @if (!String.IsNullOrEmpty(user.BackgroundPhoto))
+                {
+                    <div class="cover-photo">
+                        <img src="@Url.Content('/' + user.BackgroundPhoto)" alt="Cover Photo">
+                    </div>
+                }
+                else
+                {
+
+                    <div class="cover-photo" style="background-color:gray;">
+                    </div>
+                }
+
+                <!-- Profile Picture -->
+                @if (!String.IsNullOrEmpty(user.ProfilePhoto))
+                {
+                    <div class="profile-picture">
+                        <img src="@Url.Content('/' + user.ProfilePhoto)" alt="Profile Photo">
+                    </div>
+                }
+                else
+                {
+
+                    <div class="profile-picture">
+                        <img src="/icon/user.png" alt="Profile Photo">
+                    </div>
+                }
+
+
+            </div>
+            <div class="profile-info">
+                <h2>@user.FullName</h2>
+                <p>@user.Bio</p>
+            </div>
+        }
+
+        <div class="IconFeed">
+
+            <button type="submit" name="action" value="feed" class="btn-icon">
+                <img src="/icon/feed.png" alt="Feed">
+            </button>
+
+
+            <button type="submit" value="photo" class="btn-icon">
+                <img src="/icon/photo.png" alt="Photo">
+            </button>
+
+
+            <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#InformationModal">
+                <img src="/icon/information.png" alt="Users">
+            </button>
+
+        </div>
+
+
+
+        <div id="photo" class="photos">
+
+            @foreach (var photo in Model.Item)
+            {
+                var firstPhoto = photo.ItemPhotos.FirstOrDefault();
+                if (!string.IsNullOrEmpty(firstPhoto))
+                {
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#ItemInfo" style="border:none; padding:0;"
+                            data-title="@photo.Title"
+                            data-description="@photo.Description"
+                            data-inclusion="@photo.Inclusion"
+                            data-price="@photo.Price"
+                            data-photos="@string.Join(",", photo.ItemPhotos)">
+                        <div class="photoItem">
+                            <img src="@Url.Content("/" + firstPhoto)" alt="Item Photo" />
+                        </div>
+                    </button>
+                }
+
+            }
+        </div>
+
+
+
+    </div>
+
+    <script>
+
+
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("ItemInfo");
+
+            modal.addEventListener("show.bs.modal", event => {
+                const button = event.relatedTarget;
+
+                // Read item info from button
+                const title = button.getAttribute("data-title");
+                const description = button.getAttribute("data-description");
+                const inclusion = button.getAttribute("data-inclusion");
+                const price = button.getAttribute("data-price");
+                const photos = button.getAttribute("data-photos").split(",");
+
+                // Fill modal text
+                modal.querySelector("#itemTitle").textContent = title;
+                modal.querySelector("#itemDescription").textContent = description;
+                modal.querySelector("#itemInclusion").textContent = inclusion;
+                modal.querySelector("#itemPrice").textContent = price;
+
+                // Fill carousel with photos
+                const photoContainer = modal.querySelector("#itemPhotos");
+                photoContainer.innerHTML = ""; // reset
+
+                photos.forEach((p, i) => {
+                    const div = document.createElement("div");
+                    div.classList.add("carousel-item");
+                    if (i === 0) div.classList.add("active"); // first photo active
+
+                    const img = document.createElement("img");
+                    img.src = "/" + p.trim();
+                    img.classList.add("d-block", "w-100");
+
+                    div.appendChild(img);
+                    photoContainer.appendChild(div);
+                });
+            });
+        });
+
+
+
+    </script>
+</body>
+</html>

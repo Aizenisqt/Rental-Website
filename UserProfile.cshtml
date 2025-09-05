@@ -1,0 +1,414 @@
+﻿@page 
+@model RentalSite.Pages.UserProfileModel
+@{
+   
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RentalSite</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/css/UserProfile.css"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+<body>
+
+   
+    <div class="modal fade" id="EditInfoModal" aria-labelledby="EditInfoModal" aria-hidden="true">
+        <div class="  modal-dialog modal-dialog-scrollable" data-bs-backdrop="static">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Your Informations</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                        <form method="post" enctype="multipart/form-data" asp-page-handler="EditInfo">
+
+                        @foreach (var user in Model.users)
+                        {
+                            <div class="mb-3">
+                                <label for="Username" class="col-form-label">Username</label>
+                                <input type="text" class="form-control"  id="Username" asp-for="UserInput.UserName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="ProfilePhoto" class="col-form-label">Profile Photo</label>
+                                <input type="file" class="form-control" id="ProfilePhoto" asp-for="UserInput.ProfilePhoto">
+                            </div>
+                            <div class="mb-3">
+                                <label for="BackgroundPhoto" class="col-form-label">Background Photo</label>
+                                <input type="file" class="form-control" id="BackgroundPhoto" asp-for="UserInput.BackgroundPhoto">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Email" class="col-form-label">Email</label>
+                                <input type="email" class="form-control" id="Email" asp-for="UserInput.Email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="FullName" class="col-form-label">Full Name:</label>
+                                <input type="text" class="form-control" id="FullName" asp-for="UserInput.FullName">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Bio" class="col-form-label">Bio:</label>
+                                <input type="text" class="form-control" id="Bio" asp-for="UserInput.Bio">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Gender" class="col-form-label">Gender:</label>
+                                <input type="text" class="form-control" id="Gender" asp-for="UserInput.Gender">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Birthday" class="col-form-label">Birthday:</label>
+                                <input type="text" class="form-control" id="Birthday" asp-for="UserInput.Birthday">
+                            </div>
+                            <div class="mb-3">
+                                <label for="PhoneNumber" class="col-form-label">Phone Number:</label>
+                                <input type="tel" class="form-control" id="PhoneNumber" asp-for="UserInput.PhoneNumber">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Address" class="col-form-label">Address</label>
+                                <input type="text" class="form-control" id="Address" asp-for="UserInput.Address">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Favorite Fandom:</label>
+                                <input type="text" class="form-control" id="FavoriteFandom" asp-for="UserInput.FavoriteFandom">
+                            </div>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Emergency Contact:</label>
+                                <input type="tel" class="form-control" id="EmergencyContact" asp-for="UserInput.EmergencyContact">
+                            </div>
+                            <div class="d-flex">
+                                <button type="button" class="btn btn-danger m-3" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success m-3">Save</button>
+                            </div>
+                        }
+
+                        </form>
+                    
+                </div>
+                <div class="modal-footer">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="InformationModal" aria-labelledby="InformationModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="InformationModalBG">
+                <div class="modal-header" >
+                    <h1 class="modal-title fs-3" id="exampleModalLabel">Information</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @foreach (var user in Model.users)
+                    {
+                        <p class="fs-5"><strong>FullName:</strong>    @user.FullName</p>
+                        <p class="fs-5"><strong>Email:</strong>    @user.Email</p>
+                        <p class="fs-5"><strong>Bio:</strong>    @user.Bio</p>
+                        <p class="fs-5"><strong>Gender:</strong>    @user.Gender</p>
+                        <p class="fs-5"><strong>Birthday:</strong>    @user.Birthday</p>
+                        <p class="fs-5"><strong>Phone Number:</strong>    @user.PhoneNumber</p>
+                        <p class="fs-5"><strong>Address:</strong>    @user.Address</p>
+                        <p class="fs-5"><strong>Favorite Fandom:</strong>    @user.Fandom</p>
+                        <p class="fs-5"><strong>Emergency Contact:</strong>    @user.EmergencyContact</p>
+
+                    }
+                    
+                    <div class="d-flex">
+                        <button type="button" class="btn btn-outline-danger m-3" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline-success m-3" data-bs-target="#EditInfoModal" data-bs-toggle="modal">Edit Information</button>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="EditItem" tabindex="-1" aria-labelledby="EditItem" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="InformationModalBG">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-3" id="exampleModalLabel">Edit Item</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-page-handler="EditItem" enctype="multipart/form-data">
+                        <input type="hidden" id="PhotoId" name="id" />
+                        <div class="mb-3">
+                            <label for="Title" class="col-form-label">Title</label>
+                            <input type="text" class="form-control" id="Title" name="Title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="ProductPhoto" class="col-form-label">Product Photo</label>
+                            <input type="file" class="form-control" id="ProductPhoto" name="ProductPhoto" multiple onchange="previewImages(event)">
+                        </div>
+                        <div id="preview" class="mt-2 d-flex flex-wrap gap-2"></div>
+                        <div class="mb-3">
+                            <label for="Description" class="col-form-label">Description</label>
+                            <input type="text" class="form-control" id="Description" name="Description">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Inclusion" class="col-form-label">Inclusions</label>
+                            <textarea class="form-control" id="Inclusion" name="Inclusion" rows="4"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Price" class="col-form-label">Price</label>
+                            <input type="text" class="form-control" id="Price" name="Price">
+                        </div>
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-outline-danger m-3" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline-success m-3">Save</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="ItemInfo" tabindex="-1" aria-labelledby="ItemInfo" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable" >
+            <div class="modal-content " id="custom-modal-bg">
+                <div class="modal-header">
+                    @* <h1 class="modal-title fs-3" id="itemTitle"></h1> *@
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h1 class="modal-title fs-3" id="itemTitle"></h1>
+                    <!-- Bootstrap carousel -->
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner" id="itemPhotos"></div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                    <div class="ItemInfoContainer">
+                        <div class="itemDescription">
+                            <img src="~/icon//ForRent.png" style="position: absolute;top: 87%;left: 4%;width: 150px;height: auto;" />
+                            <hr style="margin:0;border-width:1px;" />
+                            <h4 class="fs-5" style=" position: absolute;top: 98%;left: 20%;width: 110px;height: auto;">
+                                <strong>Price:</strong> $<span id="itemPrice"></span>
+                            </h4>
+                            <p class="fs-5" id="itemDescriptions"></p>
+                            
+                        </div>
+
+
+                        <div class="Price_Inclusion" style="text-align:center;">
+                            <h4 id="InclusionHeader" style=" background-color: #D7BBF5;padding:10px;text-align:center;margin:3px;border-radius:10px;">
+                                Inclusion
+                            </h4>
+                            <p class="fs-5" id="itemInclusion"></p>
+                        </div>
+                    </div>
+               
+                </div>
+          
+            </div>
+        </div>
+    </div>
+
+
+
+<div class="userview">
+
+        @foreach (var user in Model.users)
+        {
+            <div class="profile-header"> 
+                <!-- Cover/Background Photo --> 
+        @if (!String.IsNullOrEmpty(user.BackgroundPhoto)) {
+            <div class="cover-photo"> <img src="@Url.Content('/' + user.BackgroundPhoto)" alt="Cover Photo"> 
+             </div>
+        } else
+        {
+
+            <div class="cover-photo" style="background-color:gray;"> 
+
+            </div>
+        }
+       
+                <!-- Profile Picture --> 
+        @if (!String.IsNullOrEmpty(user.ProfilePhoto)) {
+           <div class="profile-picture"> 
+               <img src="@Url.Content('/' + user.ProfilePhoto)" alt="Profile Photo">         
+           </div>
+        }else
+        {
+        
+           <div class="profile-picture"> <img src="/icon/user.png" alt="Profile Photo"> 
+             </div>
+        }
+
+
+        </div>
+        <div class="profile-info"> 
+            <h2>@user.FullName</h2>
+            <p>@user.Bio</p> 
+        </div>
+        }
+
+
+
+        <div class="IconFeed">
+          
+                <button type="submit" name="action" value="feed" class="btn-icon">
+                    <img src="/icon/feed.png" alt="Feed">
+                </button>
+            
+          
+                <button type="submit"  value="photo" class="btn-icon">
+                    <img src="/icon/photo.png" alt="Photo">
+                </button>
+
+
+            <button type="button" class="btn-icon" data-bs-toggle="modal" data-bs-target="#InformationModal">
+                    <img src="/icon/information.png" alt="Users">
+                </button>
+            
+        </div>
+
+
+
+        <div class="image-container">
+            @foreach (var photo in Model.Item)
+            {
+                var firstPhoto = photo.ItemPhotos.FirstOrDefault();
+                <div class="image-box">
+
+                    <!-- Image that opens modal -->
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#ItemInfo"
+                            style="border:none; padding:0; background:none;"
+                            data-title="@photo.Title"
+                            data-description="@photo.Description"
+                            data-inclusion="@photo.Inclusion"
+                            data-price="@photo.Price"
+                            data-id="@photo.Id"
+                            data-photos="@string.Join(",", photo.ItemPhotos)">
+                        <div class="photoItem">
+                            <img src="@Url.Content("/" + firstPhoto)" alt="Item Photo" />
+                        </div>
+                    </button>
+
+                    <!-- Delete button always in image -->
+
+
+                    <button type="button" id="EditBtn" class="Edit-btn"
+                            data-id="@photo.Id"
+                            data-title="@photo.Title"
+                            data-description="@photo.Description"
+                            data-inclusion="@photo.Inclusion"
+                            data-price="@photo.Price"
+                            data-bs-toggle="modal"
+                            data-bs-target="#EditItem"
+                             >
+                        Edit
+                    </button>
+               
+                   <form method="post" asp-page-handler="DeleteItem">
+                        <input type="hidden" name="id" value="@photo.Id" />
+                        <button type="submit" id="deletBtn" class="Delete-btn">Delete</button>
+                   </form>
+                </div>
+            }
+        </div>
+
+ </div>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("EditItem");
+
+            modal.addEventListener("show.bs.modal", event => {
+                const button = event.relatedTarget;
+
+                // Read item info from button
+             
+                 const title = button.getAttribute("data-title");
+                const description = button.getAttribute("data-description");
+                const inclusion = button.getAttribute("data-inclusion");
+                const price = button.getAttribute("data-price");                
+                const PhotoId = button.getAttribute("data-id");
+                
+
+                console.log(title);
+                console.log(description);
+                console.log(inclusion);
+                console.log(price);
+                // Fill modal text
+                modal.querySelector("#Description").placeholder = description;
+                modal.querySelector("#Title").placeholder = title;              
+                modal.querySelector("#Price").placeholder = price;
+                modal.querySelector("#Inclusion").placeholder = inclusion;
+
+                modal.querySelector("#PhotoId").value = PhotoId;
+
+
+ 
+            });
+        });
+
+
+       
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const modal = document.getElementById("ItemInfo");
+
+            modal.addEventListener("show.bs.modal", event => {
+                const button = event.relatedTarget;
+
+                // Read item info from button
+                const title = button.getAttribute("data-title");
+                const description = button.getAttribute("data-description");
+                const inclusion = button.getAttribute("data-inclusion");
+                const price = button.getAttribute("data-price");
+                const photos = button.getAttribute("data-photos").split(",");
+                const PhotoId = button.getAttribute("data-id");
+
+                console.log(PhotoId);
+                // Fill modal text
+                modal.querySelector("#itemTitle").textContent = title;
+                modal.querySelector("#itemDescriptions").textContent = description;
+                modal.querySelector("#itemInclusion").textContent = inclusion;
+                modal.querySelector("#itemPrice").textContent = price;
+
+             
+
+                // Fill carousel with photos
+                const photoContainer = modal.querySelector("#itemPhotos");
+                photoContainer.innerHTML = ""; // reset
+
+                photos.forEach((p, i) => {
+                    const div = document.createElement("div");
+                    div.classList.add("carousel-item");
+                    if (i === 0) div.classList.add("active"); // first photo active
+
+                    const img = document.createElement("img");
+                    img.src = "/" + p.trim();
+                    img.classList.add("d-block", "w-100");
+
+                    div.appendChild(img);
+                    photoContainer.appendChild(div);
+                });
+            });
+        });
+
+
+
+    </script>
+</body>
+</html>
+
+

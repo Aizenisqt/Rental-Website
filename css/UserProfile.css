@@ -1,0 +1,236 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Aladin&family=Mozilla+Text:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Revalia&family=Roboto:ital,wght@0,600;1,600&display=swap');
+
+body {
+   
+}
+
+.profile-header {
+    position: relative;
+    width: 100%;
+    margin: auto;
+}
+
+.cover-photo {
+    margin-top: 5%;
+    height: 350px;
+    overflow: hidden;
+    background-color: black;
+}
+
+    .cover-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 80%;
+    }
+
+.profile-picture {
+    position: absolute;
+    bottom: -60px; /* Moves it down, overlapping */
+    left: 100px;
+    border: 5px solid white; /* Border around profile */
+    border-radius: 50%;
+    width: 220px;
+    height: 220px;
+    overflow: hidden;
+}
+
+    .profile-picture img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+.profile-info {
+    margin-top: 80px; /* Space below profile picture */
+    margin-left: 100px;
+    padding: 0 20px;
+}
+
+    .profile-info h2 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .profile-info p {
+        color: gray;
+        margin-top: 5px;
+        font-size: 17px;
+    }
+
+.IconFeed {
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center;
+    gap: 50px; /* spacing between icons */
+    margin: 30px auto 0 auto; /* push down from name/desc */
+    width: fit-content; /* only take as much space as icons need */
+}
+
+.btn-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+    .btn-icon img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        pointer-events: none;
+    }
+
+.image-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-left: 3%;
+    margin-right: 3%;
+    z-index: 0;
+
+}
+
+.image-box {
+    position: relative;
+    overflow: hidden;
+    background-color: black;
+    border-radius: 8px;
+    
+}
+
+    .image-box img {
+        width: 100%;
+        height: 480px;
+        display: block;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: .5s;
+    }
+
+        .image-box img:hover {
+            opacity: .5;
+            transition: .5s;
+            transform: scale(1.1);
+            
+        }
+
+/* Delete button */
+.Edit-btn {
+    position: absolute;
+    bottom: 250px;
+    right:220px;
+    padding: 6px 20px;
+    background-color:green;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0; /* hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+.Delete-btn {
+    position: absolute;
+    bottom: 250px;
+    right: 130px;
+    padding: 6px 12px;
+    background: rgba(255, 0, 0, 0.85);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0; /* hidden by default */
+    transition: opacity 0.3s ease;
+}
+
+
+/* Show delete button on hover */
+.image-box:hover .Edit-btn {
+    opacity: 1;
+}
+
+.image-box:hover .Delete-btn {
+    opacity: 1;
+}
+
+
+#InformationModalBG {
+    background-color: #EDE4FF;
+    color: #6528F7;
+}
+
+#itemTitle {
+    background-color: #A076F9;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+}
+
+#carouselExample{
+    margin:3%;
+    
+}
+
+#itemPhotos{
+    border-radius:10px;
+}
+#custom-modal-bg {
+    background-color: #EDE4FF;
+    color: black; /* Change text color for contrast */
+}
+
+#modalbg {
+    background-color: #EDE4FF;
+    color: black;
+}
+.modal-header,
+.modal-footer {
+    padding: 1px; /* removes all space */
+    margin: 0 !important; /* removes extra margin */
+    border: none !important; /* removes default border line */
+}
+
+.ItemInfoContainer{
+    display:flex;
+    justify-content:center;
+}
+.itemDescription {
+    background-color: #A076F9;
+    padding: 50px;
+    border-radius: 10px;
+    width: 50%;
+    margin: 1%;
+
+}
+
+
+#itemDescription {
+    text-align: center;
+}
+
+#InclusionHeader {
+   
+}
+
+.Price_Inclusion {
+    background-color: #A076F9;
+    width: 50%;
+    border-radius: 10px;
+    margin: 1%;
+    padding: 5px;
+    text-align:center;
+}
+
+
+   

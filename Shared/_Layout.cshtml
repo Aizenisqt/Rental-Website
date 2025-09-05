@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - RentalSite</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/RentalSite.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top px-3" style="background-color:#6528F7;">
+        <div class="d-flex align-items-center w-100">
+
+            <!-- Left: Logo -->
+            <a class="navbar-brand me-3" href="/">
+                <img src="~/icon/logo.png" style="height:40px;">
+            </a>
+
+            <!-- Middle: (your search bar can go here later) -->
+            <!-- Right side: Profile + Login/Logout -->
+            <div class="d-flex align-items-center ms-auto">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <a href="~/UserProfile" class="me-2" data-bs-toggle="tooltip" title="Your Profile">
+                        <img src="~/icon/user.png" class="rounded-circle" style="height:40px;">
+                    </a>
+
+                    <form method="post" asp-page="/Account/Logout">
+                        <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+                    </form>
+                }
+                else
+                {
+                    <div class="btn-group">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Login
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/Account/LoginAndRegister">Login</a></li>
+                            <li><a class="dropdown-item" href="/Account/LoginAndRegister">Register</a></li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+    </nav>
+
+
+    @* add item Modal *@
+    <div class="modal fade" id="AddItem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="Add_Modal_Bg">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-3" id="exampleModalLabel">ADD ITEM</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" asp-page="/Account/AddItem" enctype="multipart/form-data">
+                        <input type="hidden"/>
+                        <div class="mb-3">
+                            <label for="Title" class="col-form-label">Title</label>
+                            <input type="text" class="form-control" id="Title" name="Title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="ProductPhoto" class="col-form-label">Product Photo</label>
+                            <input type="file" class="form-control" id="ProductPhoto" name="ProductPhoto"  multiple onchange="previewImages(event)">
+                        </div>
+                        <div id="preview" class="mt-2 d-flex flex-wrap gap-2"></div>
+                        <div class="mb-3">
+                            <label for="Description" class="col-form-label">Description</label>
+                            <input type="text" class="form-control" id="Description" name="Description">
+                        </div>
+                        <div class="mb-3">
+                            <label for="Inclusion" class="col-form-label">Inclusions</label>
+                            <textarea class="form-control" id="Inclusion" name="Inclusion" rows="4"
+                                      placeholder="Type one inclusion per line"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="Price" class="col-form-label">Price</label>
+                            <input type="text" class="form-control" id="Price" name="Price">
+                        </div>
+                        <div class="d-flex">
+                            <button type="button" class="btn btn-outline-danger m-3" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-outline-success m-3">Add Item</button>
+                        </div>
+                    </form>
+                   
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div style="" class="sidebar">
+        <ul class="nav  nav-pills text-center mt-3">
+            <li class="nav-item">
+                <a class=" logo nav-link" href="#"><img src="~/icon/logo.png" border-radius:50%;" /></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Home" href="/index"><img src="~/icon/home.png" /></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Feed" href="#"><img src="~/icon/web-content.png" /></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-target="#AddItem" data-bs-toggle="modal" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Add" href="#"><img src="~/icon/addition.png" /></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Notification" href="#"><img src="~/icon/bell.png" /></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Messages" href="/Message"><img src="~/icon/paper-plane.png" /></a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main content (with padding to avoid overlap) -->
+    <div style="margin-left:80px;">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @* <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2025 - RentalSite - <a asp-area="" asp-page="/Privacy">Privacy</a>
+        </div>
+    </footer> *@
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        // enable all tooltips
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+        [...tooltipTriggerList].map(el => new bootstrap.Tooltip(el));
+
+
+        //fetches the id from the backend
+        function showItem(userId, itemId) {
+            fetch(`/ItemDetails?userId=${userId}&itemId=${itemId}`)
+                .then(res => res.text())
+                .then(html => {
+                    document.getElementById("itemModalContent").innerHTML = html;
+                    var modal = new bootstrap.Modal(document.getElementById("itemModal"));
+                    modal.show();
+                });
+        }
+
+
+
+        //showing the preview of image
+        function previewImages(event) {
+            const preview = document.getElementById("preview");
+            preview.innerHTML = "";
+            for (let file of event.target.files) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = document.createElement("img");
+                    img.src = e.target.result;
+                    img.classList.add("img-thumbnail");
+                    img.style.maxWidth = "150px";
+                    img.style.maxHeight = "150px";
+                    preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</body>
+</html>

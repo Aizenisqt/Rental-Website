@@ -1,0 +1,181 @@
+﻿.profile-header {
+    position: relative;
+    width: 100%;
+    margin: auto;
+}
+
+.cover-photo {
+    margin-top: 5%;
+    height: 350px;
+    overflow: hidden;
+    background-color: black;
+}
+
+    .cover-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        opacity: 90%;
+    }
+
+.profile-picture {
+    position: absolute;
+    bottom: -60px; /* Moves it down, overlapping */
+    left: 100px;
+    border: 5px solid white; /* Border around profile */
+    border-radius: 50%;
+    width: 220px;
+    height: 220px;
+    overflow: hidden;
+}
+
+    .profile-picture img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+.profile-info {
+    margin-top: 80px; /* Space below profile picture */
+    margin-left: 100px;
+    padding: 0 20px;
+}
+
+    .profile-info h2 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .profile-info p {
+        color: gray;
+        margin-top: 5px;
+        font-size: 17px;
+    }
+
+.IconFeed {
+    display: flex;
+    justify-content: center; /* center horizontally */
+    align-items: center;
+    gap: 50px; /* spacing between icons */
+    margin: 30px auto 0 auto; /* push down from name/desc */
+    width: fit-content; /* only take as much space as icons need */
+}
+
+.btn-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+}
+
+    .btn-icon img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+        pointer-events: none;
+    }
+
+
+
+.photos {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 0; /* no gap */
+    margin-left: 3%;
+    margin-right: 3%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.photoItem {
+    overflow: hidden;
+}
+
+.photos img {
+    width: 100%; /* fills the column */
+    height: 480px; /* keeps aspect ratio */
+    display: block;
+    object-fit: cover;
+    transition: 0.5s;
+}
+
+    .photos img:hover {
+        transform: scale(1.1);
+        transition: 0.5s;
+        cursor: pointer;
+    }
+
+#InformationModalBG {
+    background-color: #EDE4FF;
+    color: #6528F7;
+}
+
+#itemTitle {
+    background-color: #A076F9;
+    border-radius: 10px;
+    padding: 30px;
+    text-align: center;
+}
+
+#carouselExample {
+    margin: 3%;
+}
+
+#itemPhotos {
+    border-radius: 10px;
+}
+
+#custom-modal-bg {
+    background-color: #EDE4FF;
+    color: black; /* Change text color for contrast */
+}
+
+#modalbg {
+    background-color: #EDE4FF;
+    color: black;
+}
+
+.modal-header,
+.modal-footer {
+    padding: 1px; /* removes all space */
+    margin: 0 !important; /* removes extra margin */
+    border: none !important; /* removes default border line */
+}
+
+.ItemInfoContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.itemDescription {
+    background-color: #A076F9;
+    padding: 50px;
+    border-radius: 10px;
+    width: 50%;
+    margin: 1%;
+}
+
+
+#itemDescription {
+    text-align: center;
+}
+
+#InclusionHeader {
+}
+
+.Price_Inclusion {
+    background-color: #A076F9;
+    width: 50%;
+    border-radius: 10px;
+    margin: 1%;
+    padding: 5px;
+    text-align: center;
+}

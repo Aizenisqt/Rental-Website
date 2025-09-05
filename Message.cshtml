@@ -1,0 +1,250 @@
+﻿@page "{otherUserId?}"
+@model RentalSite.Pages.MessageModel
+@{
+
+    var otherUserId = Model.OtherUserId;
+}
+<link rel="stylesheet" href="~/css/Message.css" />
+<!-- Bootstrap 5 CSS (remove if you already include it) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome (for icons; optional) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+
+
+<section>
+    <div class="container" id="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card" id="chat3" style="border-radius: 15px;">
+                    <div class="card-body">
+                        <div class="row g-3">
+
+                            <!-- CONTACTS SIDEBAR -->
+                            <div class="contacts-panel col-md-6 col-lg-5 col-xl-4 " id="contactsPanel">
+                                <div class="p-3">
+                                    <!-- Close button (visible on mobile since panel is off-canvas) -->
+                                    <button class="btn btn-sm btn-outline-secondary d-md-none mb-3" onclick="toggleContacts(false)">Close ✖</button>
+
+                                    <div class="input-group rounded mb-3">
+                                        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                                        <span class="input-group-text border-0" id="search-addon">
+                                            <i class="fas fa-search"></i>
+                                        </span>
+                                    </div>
+
+                                    @* this is a contactlist *@
+                                    <div class="contacts-scroll">
+                                        <ul class="list-unstyled mb-0">
+                                            @foreach (var user in Model.users)  // assuming your PageModel has Users list
+                                            {
+                                                var userid = user.UserLoginId;
+                                                var unreadCount = Model.GetUnreadCount(user.UserLoginId);
+                                                <li id="recieverId" class=" contact-item  p-2 border-bottom " data-userid="@user.UserLoginId" style="cursor:pointer;">
+                                                    <a href="javascript:void(0)" class="d-flex justify-content-between text-decoration-none text-reset">
+                                                        <div class="d-flex flex-row">
+                                                            <div class="position-relative">
+                                                                <img src="@Url.Content("/" + user.ProfilePhoto)"
+                                                                     alt="avatar"
+                                                                     class="d-flex align-self-center me-3 rounded-circle"
+                                                                     width="60" height="60" style="object-fit:cover;">
+                                                                <span class="badge bg-success badge-dot position-absolute" style="right:10px; bottom: 6px;"></span>
+                                                            </div>
+                                                            <div class="pt-1" >
+                                                                <p class="fw-bold mb-0">@user.FullName</p>                                                               
+                                                            </div>
+                                                        </div>
+                                                        <div class="pt-1 text-end badges">
+                                                            <p class="small text-muted mb-1">Just now</p>
+                                                            <span id="badge-@user.UserLoginId" class="badge bg-danger rounded-pill float-end @(unreadCount > 0 ? "" : "d-none")">@unreadCount</span>
+                                                        </div>
+
+
+                                                    </a>
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- END OF CONTACTS SIDEBAR -->
+
+
+                            <!-- CHAT AREA -->
+                            <div class="col-md-6 col-lg-7 col-xl-8">
+                                <!-- Mobile header with Open Contacts button -->
+                                <div class="d-flex align-items-center justify-content-between d-md-none">
+                                    <button class="btn btn-primary btn-sm open-contacts-btn" onclick="toggleContacts(true)">
+                                        <i class="fa-solid fa-user-group me-1"></i> Open Contacts
+                                    </button>
+                                </div>
+                                    
+                                        <div class="chat-messages pt-3 pe-3 mt-2 mt-md-0" id="chatMessages">
+                                            <div class="d-flex flex-row justify-content-start">
+                                                @* <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp" alt="avatar" style="width: 45px; height: 100%;">
+                                                <div>
+                                                    <p class="small p-2 ms-3 mb-1 rounded-3 bg-body-tertiary">
+                                                 
+                                                    </p>
+                                                </div> *@
+                                            </div>
+
+
+                                            <!-- Add more messages as needed... -->
+                                        </div>
+                                                                 
+                                <!-- CHAT INPUT -->
+                                <div class="text-muted d-flex justify-content-start align-items-center " id="chatSection">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava6-bg.webp" alt="avatar 3" style="width: 40px; height: 100%;">
+                                   
+                                    <input type="text" class="form-control form-control-lg ms-2" placeholder="Type message" id="messageInput">
+                                    <a class="ms-2 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
+                                    <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
+                                    @* <a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a> *@
+                                    <button class="btn btn-outline-success" id="sendButton">Send</button>
+                                </div>
+                            </div>
+                            <!-- END OF /CHAT AREA -->
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Backdrop for mobile when contacts panel is open -->
+    <div id="contactsBackdrop" onclick="toggleContacts(false)"></div>
+</section>
+
+
+<script>
+
+    
+     
+    window.App = {
+        currentUserId: @Json.Serialize(Model.currentUser),
+        currentReceiverId: null
+
+       
+    };
+</script>
+
+
+<script src="~/js/signalr/dist/browser/signalr.js"></script>
+<script src="~/js/chat.js"></script>
+<!-- Bootstrap 5 JS (remove if already included) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Font Awesome JS (optional) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+<script>
+
+       document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".contact-item").forEach(item => {
+            item.addEventListener("click", async function () {
+                const selectedUserId = this.getAttribute("data-userid");
+                console.log("Selected user:", selectedUserId);
+                console.log("Current User ID: " +window.App.currentUserId);
+
+             await fetch(`/Message?handler=MarkAsRead&otherUserId=${selectedUserId}`);
+
+
+
+
+            // 🔹 Hide badge for this user
+            const badge = document.getElementById(`badge-${selectedUserId}`);
+            if (badge) {
+                badge.innerText = "";
+                badge.classList.add("d-none");
+            }
+
+
+                if (!selectedUserId) {
+                    console.warn("⚠️ No userId found for this contact.");
+                    return;
+                }
+
+                // Save globally
+                window.App.currentReceiverId = selectedUserId;
+                console.log("Updated window.App.currentReceiverId =", window.App.currentReceiverId);
+
+                try {
+                    // 🔹 Fetch messages from backend
+                    const response = await fetch(`/Message?handler=Messages&otherUserId=${selectedUserId}`);
+                    const messages = await response.json();
+
+                    // 🔹 Render into chat box
+                    const chatBox = document.getElementById("chatMessages");
+                    chatBox.innerHTML = "";
+
+                    messages.forEach(msg => {
+                        const div = document.createElement("div");
+                        const isMine = msg.senderId === window.App.currentUserId;
+
+                        div.classList.add("d-flex", "mb-2", isMine ? "justify-content-end" : "justify-content-start");
+
+                        div.innerHTML = `
+                            <div id="message" class="p-2 rounded-3 ${isMine ? 'bg-primary text-white' : 'bg-light'}">
+                                ${msg.content}
+                            </div>
+                             
+                        `;
+
+                        chatBox.appendChild(div);
+                    });
+
+                    chatBox.scrollTop = chatBox.scrollHeight; // auto scroll down
+
+                } catch (err) {
+                    console.error("❌ Error fetching messages:", err);
+                }
+
+                // Highlight active contact
+                document.querySelectorAll(".contact-item").forEach(i => i.classList.remove("active"));
+                this.classList.add("active");
+            });
+        });
+
+      
+        
+    });
+
+
+      function toggleContacts(open) {
+      const panel = document.getElementById('contactsPanel');
+      const backdrop = document.getElementById('contactsBackdrop');
+
+      // Only use off-canvas behavior on small screens
+      const isMobile = window.matchMedia('(max-width: 767.98px)').matches;
+
+      if (!isMobile) {
+        // On desktop/tablet, panel is always visible; do nothing
+        return;
+      }
+
+      if (open) {
+        panel.classList.add('open');
+        backdrop.classList.add('show');
+      } else {
+        panel.classList.remove('open');
+        backdrop.classList.remove('show');
+      }
+    }
+
+    // If user resizes from mobile to desktop, make sure classes don't keep it hidden
+    window.addEventListener('resize', () => {
+      const panel = document.getElementById('contactsPanel');
+      const backdrop = document.getElementById('contactsBackdrop');
+      const isMobile = window.matchMedia('(max-width: 767.98px)').matches;
+
+      if (!isMobile) {
+        panel.classList.remove('open');
+        backdrop.classList.remove('show');
+      }
+    });
+</script>
+
+
